@@ -68,3 +68,5 @@ def train(model, opt, epochs, X_train_loader, X_val_loader, y_train_loader, y_va
             plt.axis('off')
         plt.suptitle('%d / %d - loss: %f' % (epoch+1, epochs, avg_loss))
         plt.show()
+
+

@@ -37,7 +37,7 @@ def checkDevice():
     return torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
-def loadData(data_path_X, data_path_y, batch_size):
+def loadTrainData(data_path_X, data_path_y, batch_size):
     
 
 
@@ -56,3 +56,22 @@ def loadData(data_path_X, data_path_y, batch_size):
 
 
     return X_train_loader, X_val_loader, y_train_loader, y_val_loader
+
+
+def loadTestData(data_path_X, data_path_y, batch_size):
+    
+
+
+    transform = transforms.Compose([transforms.ToTensor()])
+
+    Xset = ISIC(False, transform=transform, data_path=data_path_X)
+    yset = ISIC(False, transform=transform, data_path=data_path_y)
+
+    print(len(Xset.image_paths))
+    print(len(yset.image_paths))
+
+    X_test_loader = DataLoader(Xset, batch_size=batch_size, shuffle=True, num_workers=3)
+    y_test_loader = DataLoader(yset, batch_size=batch_size, shuffle=False, num_workers=3)
+
+
+    return X_test_loader, y_test_loader
