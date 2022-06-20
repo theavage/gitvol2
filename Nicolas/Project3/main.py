@@ -8,9 +8,9 @@ from model import *
 from utils import *
 from train import * 
 from predict import * 
-#from new_unet import *
+from new_unet import *
 
-PREDICT = True
+PREDICT = False
 
 device = checkDevice()
 
@@ -21,14 +21,14 @@ if PREDICT == False:
     #X_train, y_train = next(iter(trainloader))
     #X_val, y_val = next(iter(valloader))
 
-    model = train(model, optim.Adam(model.parameters(),lr=0.0001), 5, trainloader,valloader, device)
+    model = train(model, optim.Adam(model.parameters(),lr=0.0001), 50, trainloader,valloader, device)
 
-    path = 'model.pt'
+    path = 'model_50_ALL.pt'
     torch.save(model.state_dict(), path)   
 
 else:
 
-    path = 'model.pt'
+    path = 'model_20_ALL.pt'
     model.load_state_dict(torch.load(path))
 
     testloader= loadTestData(6)
