@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class DoubleConv2d(nn.Module):
-    def _init_(self, in_channels, out_channels):
-        super(DoubleConv2d, self)._init_()
+    def __init__(self, in_channels, out_channels):
+        super(DoubleConv2d, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, 3, padding=1)
         self.conv2 = nn.Conv2d(out_channels, out_channels, 3, padding=1)
         self.bn = nn.BatchNorm2d(num_features=out_channels)
@@ -22,8 +22,8 @@ class DoubleConv2d(nn.Module):
         return x
 
 class Down(nn.Module):
-    def _init_(self, in_channels, out_channels):
-        super(Down, self)._init_()
+    def __init__(self, in_channels, out_channels):
+        super(Down, self).__init__()
         self.maxpool = nn.MaxPool2d(kernel_size=2)
         self.conv = DoubleConv2d(in_channels, out_channels)
 
@@ -33,8 +33,8 @@ class Down(nn.Module):
         return x
 
 class Up(nn.Module):
-    def _init_(self, in_channels, out_channels, skip_channels):
-        super(Up, self)._init_()
+    def __init__(self, in_channels, out_channels, skip_channels):
+        super(Up, self).__init__()
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.conv = DoubleConv2d(in_channels + skip_channels, out_channels)
 
@@ -45,8 +45,8 @@ class Up(nn.Module):
         return x
 
 class new_UNet(nn.Module):
-    def _init_(self):
-        super(new_UNet, self)._init_()
+    def __init__(self):
+        super(new_UNet, self).__init__()
 
         self.first_conv = DoubleConv2d(in_channels=3, out_channels=64)
 
